@@ -275,7 +275,6 @@ const SocialLinks = () => null;
 
 const ProjectOptions = () => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const [isExpanded, setIsExpanded] = useState(false);
 
   const options = [
     {
@@ -316,7 +315,6 @@ const ProjectOptions = () => {
 
   const handleOptionClick = (optionId: string) => {
     setSelectedOption(selectedOption === optionId ? null : optionId);
-    setIsExpanded(true);
   };
 
   return (
@@ -441,8 +439,8 @@ const DevelopmentEnvironment = () => {
         
         <div className="bg-blue-50 dark:bg-blue-900/30 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
           <p className="text-blue-800 dark:text-blue-200 italic">
-            "Leveraging the power of ARM and Apple&apos;s design language to create 
-            a seamless, performant, and visually elegant user experience."
+            &quot;Leveraging the power of ARM and Apple&apos;s design language to create 
+            a seamless, performant, and visually elegant user experience.&quot;
             - Niladri Das
           </p>
         </div>
@@ -735,7 +733,7 @@ export default function DocsPage() {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [showCodeNotice, setShowCodeNotice] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
-
+  
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -757,7 +755,15 @@ export default function DocsPage() {
     };
   }, []);
 
-  const projectDescription = `WebSocket Object Detection isn&apos;t just another project - it&apos;s a cutting-edge solution for real-time object tracking.`;
+  const renderProjectQuote = () => (
+    <div className="bg-blue-50 dark:bg-blue-900/30 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+      <p className="text-blue-800 dark:text-blue-200 italic">
+        &quot;Leveraging the power of ARM and Apple&apos;s design language to create 
+        a seamless, performant, and visually elegant user experience.&quot;
+        - Niladri Das
+      </p>
+    </div>
+  );
 
   return (
     <main className="min-h-screen relative dark:bg-gray-900 dark:text-gray-100">
