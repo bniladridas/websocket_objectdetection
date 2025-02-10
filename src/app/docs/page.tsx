@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { 
@@ -8,8 +6,17 @@ import {
 } from '@heroicons/react/24/solid';
 import { Inter, Roboto_Mono } from 'next/font/google';
 
-const inter = Inter({ subsets: ['latin'] });
-const robotoMono = Roboto_Mono({ subsets: ['latin'] });
+const inter = Inter({ 
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter'
+});
+
+const robotoMono = Roboto_Mono({ 
+  subsets: ['latin'], 
+  display: 'swap',
+  variable: '--font-roboto-mono'
+});
 
 const projectSections = [
   {
@@ -733,7 +740,7 @@ export default function DocsPage() {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [showCodeNotice, setShowCodeNotice] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
-  
+
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -755,18 +762,17 @@ export default function DocsPage() {
     };
   }, []);
 
-  const renderProjectQuote = () => (
-    <div className="bg-blue-50 dark:bg-blue-900/30 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-      <p className="text-blue-800 dark:text-blue-200 italic">
-        &quot;Leveraging the power of ARM and Apple&apos;s design language to create 
-        a seamless, performant, and visually elegant user experience.&quot;
-        - Niladri Das
-      </p>
-    </div>
-  );
-
   return (
-    <main className="min-h-screen relative dark:bg-gray-900 dark:text-gray-100">
+    <main 
+      className={`
+        min-h-screen 
+        relative 
+        dark:bg-gray-900 
+        dark:text-gray-100 
+        ${inter.variable} 
+        ${robotoMono.variable}
+      `}
+    >
       {/* Code Availability Notice */}
       {showCodeNotice && (
         <div className="
@@ -808,81 +814,16 @@ export default function DocsPage() {
         </div>
       )}
 
-      {/* Theme Toggle Button with Enhanced Accessibility */}
+      {/* Theme Toggle Button */}
       <button 
         onClick={() => setIsDarkMode(!isDarkMode)} 
         aria-label={`Switch to ${isDarkMode ? 'light' : 'dark'} mode`}
         aria-pressed={isDarkMode}
         title={`Toggle ${isDarkMode ? 'Light' : 'Dark'} Mode`}
-        className="
-          theme-toggle 
-          fixed 
-          bottom-4 
-          right-4 
-          z-50 
-          focus:outline-none 
-          focus:ring-2 
-          focus:ring-blue-500 
-          rounded-full 
-          transition-transform 
-          hover:scale-110 
-          active:scale-95
-        "
+        className="theme-toggle fixed bottom-4 right-4 z-50"
       >
-        <span className="sr-only">
-          {isDarkMode ? 'Enable Light Mode' : 'Enable Dark Mode'}
-        </span>
         {isDarkMode ? '🌞' : '🌙'}
       </button>
-
-      {/* Back to Home Button */}
-      <div className="absolute top-6 left-6 z-50">
-        <button 
-          onClick={() => router.push('/')}
-          className="
-            group 
-            flex 
-            items-center 
-            justify-center 
-            w-12 
-            h-12 
-            rounded-full 
-            bg-gray-100 
-            dark:bg-gray-800 
-            hover:bg-gray-200 
-            dark:hover:bg-gray-700 
-            transition-all 
-            duration-300 
-            shadow-md 
-            hover:shadow-lg
-          "
-        >
-          <ChevronLeftIcon 
-            className="
-              w-6 
-              h-6 
-              text-gray-700 
-              dark:text-gray-300 
-              group-hover:translate-x-[-2px] 
-              transition-transform
-            " 
-          />
-          <span className="
-            absolute 
-            opacity-0 
-            group-hover:opacity-100 
-            group-hover:translate-x-2 
-            transition-all 
-            duration-300 
-            text-xs 
-            text-gray-500 
-            dark:text-gray-400 
-            ml-2
-          ">
-            Home
-          </span>
-        </button>
-      </div>
 
       {/* Mobile Header */}
       {isMobile && (
@@ -905,6 +846,15 @@ export default function DocsPage() {
           </button>
         </div>
       )}
+
+      {/* Project Quote */}
+      <div className="bg-blue-50 dark:bg-blue-900/30 p-4 rounded-lg border border-blue-200 dark:border-blue-800 mt-16">
+        <p className="text-blue-800 dark:text-blue-200 italic">
+          &quot;Leveraging the power of ARM and Apple&apos;s design language to create 
+          a seamless, performant, and visually elegant user experience.&quot;
+          - Niladri Das
+        </p>
+      </div>
       
       <section className="container mx-auto px-4 py-16 dark:bg-gray-900">
         <h1 className="text-4xl font-bold mb-8 text-center text-gray-900 dark:text-gray-100">
