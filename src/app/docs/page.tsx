@@ -787,8 +787,12 @@ export default function DocsPage() {
       setIsMobile(window.innerWidth <= 768);
     };
     
-    // Check for system preference initially
-    const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    // Persistent Theme Preference
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDarkMode = savedTheme 
+      ? savedTheme === 'dark' 
+      : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
     setIsDarkMode(prefersDarkMode);
     document.body.classList.toggle('light-mode', !prefersDarkMode);
     
@@ -804,10 +808,26 @@ export default function DocsPage() {
     const newMode = !isDarkMode;
     setIsDarkMode(newMode);
     document.body.classList.toggle('light-mode', !newMode);
+    
+    // Persist theme preference
+    localStorage.setItem('theme', newMode ? 'dark' : 'light');
+    
+    // Subtle theme transition sound (optional)
+    try {
+      const audio = new Audio('/theme-toggle.mp3');
+      audio.volume = 0.2;
+      audio.play().catch(() => {});
+    } catch {}
   };
 
   return (
-    <main className="min-h-screen relative">
+    <main 
+      className="min-h-screen relative dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300"
+      style={{
+        // Reduce color transition repaint
+        willChange: 'background-color, color'
+      }}
+    >
       {/* Code Availability Notice */}
       {showCodeNotice && (
         <div className="
@@ -823,6 +843,8 @@ export default function DocsPage() {
           flex 
           items-center 
           justify-center
+          dark:bg-yellow-700 
+          dark:text-white
         ">
           <span className="mr-4 font-bold">🚧 Notice:</span>
           <p>Full source code is not publicly shared yet. Detailed documentation available.</p>
@@ -838,6 +860,8 @@ export default function DocsPage() {
               text-xs 
               hover:bg-gray-800 
               transition-colors
+              dark:bg-gray-700
+              dark:hover:bg-gray-600
             "
           >
             Dismiss
@@ -845,11 +869,30 @@ export default function DocsPage() {
         </div>
       )}
 
-      {/* Theme Toggle Button */}
+      {/* Theme Toggle Button with Enhanced Accessibility */}
       <button 
         onClick={toggleDarkMode} 
-        className="theme-toggle fixed bottom-4 right-4 z-50"
+        aria-label={`Switch to ${isDarkMode ? 'light' : 'dark'} mode`}
+        aria-pressed={isDarkMode}
+        title={`Toggle ${isDarkMode ? 'Light' : 'Dark'} Mode`}
+        className="
+          theme-toggle 
+          fixed 
+          bottom-4 
+          right-4 
+          z-50 
+          focus:outline-none 
+          focus:ring-2 
+          focus:ring-blue-500 
+          rounded-full 
+          transition-transform 
+          hover:scale-110 
+          active:scale-95
+        "
       >
+        <span className="sr-only">
+          {isDarkMode ? 'Enable Light Mode' : 'Enable Dark Mode'}
+        </span>
         {isDarkMode ? '🌞' : '🌙'}
       </button>
 
@@ -904,28 +947,28 @@ export default function DocsPage() {
 
       {/* Mobile Header */}
       {isMobile && (
-        <div className="md:hidden fixed top-0 left-0 right-0 bg-[var(--background)] z-50 p-4 flex justify-between items-center border-b border-gray-700">
+        <div className="md:hidden fixed top-0 left-0 right-0 bg-gray-100 dark:bg-gray-800 z-50 p-4 flex justify-between items-center border-b border-gray-200 dark:border-gray-700">
           <button 
             onClick={() => router.push('/')}
-            className="text-gray-300 hover:text-white transition-colors"
+            className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
           >
             <ChevronLeftIcon className="h-6 w-6" />
           </button>
           
-          <h1 className="text-lg font-semibold text-gray-200">
+          <h1 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
             Project Documentation
           </h1>
           
           <button 
-            className="text-gray-300 hover:text-white transition-colors"
+            className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
           >
             <Bars3Icon className="h-6 w-6" />
           </button>
         </div>
       )}
       
-      <section className="container mx-auto px-4 py-16">
-        <h1 className="text-4xl font-bold mb-8 text-center">
+      <section className="container mx-auto px-4 py-16 dark:bg-gray-900">
+        <h1 className="text-4xl font-bold mb-8 text-center text-gray-900 dark:text-gray-100">
           WebSocket Object Detection Documentation
         </h1>
         

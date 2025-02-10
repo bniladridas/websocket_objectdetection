@@ -51,16 +51,32 @@
   --transition-opacity: opacity var(--duration-medium) var(--ease-in-out-subtle);
 }
 
+* {
+  transition: 
+    background-color var(--transition-speed-normal),
+    color var(--transition-speed-normal),
+    border-color var(--transition-speed-normal),
+    filter var(--transition-speed-normal);
+  will-change: background-color, color, border-color, filter;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
 body {
   font-family: var(--font-family-base);
   background-color: var(--background-dark);
   color: var(--foreground-dark);
-  -webkit-font-smoothing: antialiased;    /* Smoother fonts on WebKit browsers */
-  -moz-osx-font-smoothing: grayscale;     /* Font smoothing for Firefox on macOS */
-  text-rendering: optimizeLegibility;     /* Improved font rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   transition: 
     background-color var(--transition-speed-normal),
     color var(--transition-speed-normal);
+  
+  /* Performance Optimization */
+  contain: layout;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 /* Default to Dark Mode */
@@ -73,6 +89,32 @@ body {
 body.light-mode {
   background-color: var(--background-light);
   color: var(--foreground-light);
+}
+
+/* Comprehensive Dark Mode Styling */
+body.light-mode * {
+  color: var(--foreground-light) !important;
+  background-color: var(--background-light) !important;
+  border-color: rgba(0,0,0,0.1) !important;
+}
+
+body * {
+  color: var(--foreground-dark) !important;
+  background-color: var(--background-dark) !important;
+  border-color: rgba(255,255,255,0.1) !important;
+}
+
+/* Ensure SVG and Icons adapt */
+body.light-mode svg, 
+body.light-mode path, 
+body.light-mode img {
+  filter: invert(0) !important;
+}
+
+body svg, 
+body.path, 
+body img {
+  filter: invert(1) !important;
 }
 
 /* Theme Toggle Button */
@@ -92,6 +134,14 @@ body.light-mode {
     hover:scale-110 
     transition-all 
     duration-300;
+  
+  transition: 
+    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.3s ease;
+  
+  will-change: transform, background-color;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 /* Color Scheme Transitions */
@@ -99,7 +149,8 @@ body.light-mode {
   transition: 
     background-color var(--transition-speed-normal),
     color var(--transition-speed-normal),
-    border-color var(--transition-speed-normal);
+    border-color var(--transition-speed-normal),
+    filter var(--transition-speed-normal);
 }
 
 /* Scrollbar Styling for Both Modes */
