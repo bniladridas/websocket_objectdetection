@@ -1,27 +1,15 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Inter, Roboto_Mono } from 'next/font/google';
 import { useRouter } from 'next/navigation';
 import { 
   ChevronLeftIcon, 
-  Bars3Icon, 
-  XMarkIcon 
+  Bars3Icon 
 } from '@heroicons/react/24/solid';
-import Image from 'next/image';
+import { Inter, Roboto_Mono } from 'next/font/google';
 
-// Font configurations
-const inter = Inter({ 
-  subsets: ['latin'], 
-  weight: ['300', '400', '600', '700'],
-  display: 'swap'
-});
-
-const robotoMono = Roboto_Mono({ 
-  subsets: ['latin'], 
-  weight: ['400', '700'],
-  display: 'swap'
-});
+const inter = Inter({ subsets: ['latin'] });
+const robotoMono = Roboto_Mono({ subsets: ['latin'] });
 
 const projectSections = [
   {
@@ -453,7 +441,7 @@ const DevelopmentEnvironment = () => {
         
         <div className="bg-blue-50 dark:bg-blue-900/30 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
           <p className="text-blue-800 dark:text-blue-200 italic">
-            "Leveraging the power of ARM and Apple's design language to create 
+            "Leveraging the power of ARM and Apple&apos;s design language to create 
             a seamless, performant, and visually elegant user experience."
             - Niladri Das
           </p>
@@ -469,7 +457,8 @@ const CodeShowcase = () => {
   const codeSnippets = {
     python: {
       title: 'WebSocket Object Detection (Python)',
-      code: `import cv2
+      code: `
+import cv2
 import torch
 import numpy as np
 from ultralytics import YOLO
@@ -520,7 +509,8 @@ def handle_webcam_frame(data):
     },
     typescript: {
       title: 'WebSocket Client (TypeScript)',
-      code: `import { io } from 'socket.io-client';
+      code: `
+import { io } from 'socket.io-client';
 import { useState, useEffect } from 'react';
 
 interface ObjectDetection {
@@ -583,7 +573,8 @@ const ObjectDetectionView = () => {
     },
     docker: {
       title: 'Containerization (Dockerfile)',
-      code: `# Multi-stage build for Zero-Shot Object Detection
+      code: `
+# Multi-stage build for Zero-Shot Object Detection
 
 # Base Python Image
 FROM python:3.10-slim-buster AS base
@@ -608,9 +599,9 @@ COPY backend/ .
 # Frontend Stage
 FROM node:18-alpine AS frontend
 WORKDIR /app
-COPY frontend/package*.json ./
+COPY frontend/Agentic\\ Object\\ Detection/package*.json ./
 RUN npm install
-COPY frontend/ .
+COPY frontend/Agentic\\ Object\\ Detection/ .
 
 # Final Stage
 FROM base
@@ -741,17 +732,15 @@ CMD ["python", "backend/app.py"]
 
 export default function DocsPage() {
   const router = useRouter();
-  const [activeSection, setActiveSection] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [showCodeNotice, setShowCodeNotice] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
     };
     
-    // Persistent Theme Preference
     const savedTheme = localStorage.getItem('theme');
     const prefersDarkMode = savedTheme 
       ? savedTheme === 'dark' 
@@ -768,30 +757,10 @@ export default function DocsPage() {
     };
   }, []);
 
-  const toggleDarkMode = () => {
-    const newMode = !isDarkMode;
-    setIsDarkMode(newMode);
-    document.body.classList.toggle('light-mode', !newMode);
-    
-    // Persist theme preference
-    localStorage.setItem('theme', newMode ? 'dark' : 'light');
-    
-    // Subtle theme transition sound (optional)
-    try {
-      const audio = new Audio('/theme-toggle.mp3');
-      audio.volume = 0.2;
-      audio.play().catch(() => {});
-    } catch {}
-  };
+  const projectDescription = `WebSocket Object Detection isn&apos;t just another project - it&apos;s a cutting-edge solution for real-time object tracking.`;
 
   return (
-    <main 
-      className="min-h-screen relative dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300"
-      style={{
-        // Reduce color transition repaint
-        willChange: 'background-color, color'
-      }}
-    >
+    <main className="min-h-screen relative dark:bg-gray-900 dark:text-gray-100">
       {/* Code Availability Notice */}
       {showCodeNotice && (
         <div className="
@@ -835,7 +804,7 @@ export default function DocsPage() {
 
       {/* Theme Toggle Button with Enhanced Accessibility */}
       <button 
-        onClick={toggleDarkMode} 
+        onClick={() => setIsDarkMode(!isDarkMode)} 
         aria-label={`Switch to ${isDarkMode ? 'light' : 'dark'} mode`}
         aria-pressed={isDarkMode}
         title={`Toggle ${isDarkMode ? 'Light' : 'Dark'} Mode`}

@@ -1,14 +1,11 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRightCircleIcon } from '@heroicons/react/24/solid';
 
 export default function Home() {
-  const router = useRouter();
-
   return (
     <div 
       className="min-h-screen bg-[var(--background)] text-[var(--foreground)] 
