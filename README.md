@@ -1,36 +1,97 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Agentic Zero-Shot Object Detection System
 
-## Getting Started
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Python](https://img.shields.io/badge/Python-3.10+-green.svg)](https://www.python.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-15.1.6-black.svg)](https://nextjs.org/)
+[![AI](https://img.shields.io/badge/AI-Zero--Shot-purple.svg)](https://en.wikipedia.org/wiki/Zero-shot_learning)
 
-First, run the development server:
+## Overview
+An advanced AI-powered object detection system that leverages cutting-edge technologies for intelligent, real-time visual understanding.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Core Technologies
+- **Object Detection**: Ultralytics YOLO
+- **Natural Language Processing**: LlamaIndex
+- **Backend**: Flask WebSocket
+- **Frontend**: Next.js & React
+- **Styling**: Tailwind CSS
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Key Features
+- Real-time object detection
+- Natural language query processing
+- WebSocket-based live streaming
+- Zero-shot learning capabilities
+- CUDA-optimized performance
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Prerequisites
+- Python 3.10+
+- Node.js 18+
+- npm
+- CUDA (optional, for GPU acceleration)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Setup
 
-## Learn More
+### Backend
+1. Navigate to `backend` directory
+2. Create virtual environment:
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+### Frontend
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Running the Application
+1. Start Backend:
+   ```bash
+   cd backend
+   python app.py
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. Start Frontend:
+   ```bash
+   npm run dev
+   ```
 
-## Deploy on Vercel
+## Access
+- Frontend: `http://localhost:3000`
+- Backend API: `http://localhost:5001`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Technologies
+- Next.js
+- React
+- Tailwind CSS
+- Flask
+- WebSockets
+- Ultralytics YOLO
+- LlamaIndex
+- CUDA (optional)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deployment
+- Backend: Render-ready configuration
+- Frontend: Vercel deployment support
+
+## Contributing
+Contributions are welcome! Please follow best practices and include tests.
+
+## License
+MIT License
+
+## Contributing
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## Contact
+Niladri Das - [@bniladridas](https://twitter.com/bniladridas)
+
+Project Link: [https://github.com/bniladridas/websocket-object-detection](https://github.com/bniladridas/websocket-object-detection)

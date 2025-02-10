@@ -3,19 +3,538 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  /* Light Mode Color Tokens */
+  --background-light: #ffffff;
+  --background-secondary-light: #f4f4f5;
+  --foreground-light: #111827;
+  --foreground-secondary-light: #4b5563;
+  --accent-primary-light: #3b82f6;
+  --accent-secondary-light: #10b981;
+  
+  /* Dark Mode Color Tokens */
+  --background-dark: #111827;
+  --background-secondary-dark: #1f2937;
+  --foreground-dark: #f9fafb;
+  --foreground-secondary-dark: #9ca3af;
+  --accent-primary-dark: #60a5fa;
+  --accent-secondary-dark: #34d399;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Transition Properties */
+  --transition-speed-fast: 150ms;
+  --transition-speed-normal: 300ms;
+  --transition-speed-slow: 500ms;
+
+  /* Enhanced iOS/Apple-optimized Font Family */
+  --font-family-base: 
+    -apple-system,         /* San Francisco on macOS and iOS */
+    system-ui,             /* Ensures consistent system font */
+    BlinkMacSystemFont,    /* Specific to macOS */
+    'Segoe UI',            /* Windows */
+    Roboto,                /* Android */
+    'Helvetica Neue',      /* Older Apple systems */
+    'Arial',               /* Fallback */
+    sans-serif;            /* Ultimate fallback */
+
+  /* Timing Functions */
+  --ease-in-out-subtle: cubic-bezier(0.45, 0, 0.40, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-expo: cubic-bezier(0.7, 0, 0.84, 0);
+
+  /* Animation Durations */
+  --duration-quick: 0.2s;
+  --duration-medium: 0.4s;
+  --duration-slow: 0.6s;
+
+  /* Transition Properties */
+  --transition-standard: all var(--duration-medium) var(--ease-in-out-subtle);
+  --transition-transform: transform var(--duration-quick) var(--ease-out-expo);
+  --transition-opacity: opacity var(--duration-medium) var(--ease-in-out-subtle);
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-family-base);
+  background-color: var(--background-dark);
+  color: var(--foreground-dark);
+  -webkit-font-smoothing: antialiased;    /* Smoother fonts on WebKit browsers */
+  -moz-osx-font-smoothing: grayscale;     /* Font smoothing for Firefox on macOS */
+  text-rendering: optimizeLegibility;     /* Improved font rendering */
+  transition: 
+    background-color var(--transition-speed-normal),
+    color var(--transition-speed-normal);
+}
+
+/* Default to Dark Mode */
+body {
+  color: var(--foreground-dark);
+  background: var(--background-dark);
+}
+
+/* Light Mode Specific Styles */
+body.light-mode {
+  background-color: var(--background-light);
+  color: var(--foreground-light);
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+  @apply 
+    fixed 
+    bottom-4 
+    right-4 
+    z-50 
+    bg-gray-800 
+    dark:bg-gray-200 
+    text-white 
+    dark:text-black 
+    p-2 
+    rounded-full 
+    shadow-lg 
+    hover:scale-110 
+    transition-all 
+    duration-300;
+}
+
+/* Color Scheme Transitions */
+* {
+  transition: 
+    background-color var(--transition-speed-normal),
+    color var(--transition-speed-normal),
+    border-color var(--transition-speed-normal);
+}
+
+/* Scrollbar Styling for Both Modes */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-secondary-dark);
+  transition: background-color var(--transition-speed-normal);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-primary-dark);
+  border-radius: 4px;
+  transition: background-color var(--transition-speed-normal);
+}
+
+body.light-mode ::-webkit-scrollbar-track {
+  background: var(--background-secondary-light);
+}
+
+body.light-mode ::-webkit-scrollbar-thumb {
+  background: var(--accent-primary-light);
+}
+
+/* Gradient and Text Color Adaptations */
+.text-gradient {
+  background: linear-gradient(
+    to right, 
+    var(--accent-primary-dark), 
+    var(--accent-secondary-dark)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: background var(--transition-speed-normal);
+}
+
+body.light-mode .text-gradient {
+  background: linear-gradient(
+    to right, 
+    var(--accent-primary-light), 
+    var(--accent-secondary-light)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Interactive Elements Theme Adaptation */
+.interactive-element {
+  @apply 
+    transition-all 
+    duration-300 
+    ease-in-out 
+    hover:scale-105 
+    hover:shadow-lg 
+    active:scale-95;
+}
+
+/* Backdrop Blur Utility */
+.backdrop-blur-light {
+  backdrop-filter: blur(10px);
+  background-color: rgba(107, 70, 193, 0.1);
+  transition: background-color var(--transition-speed-normal);
+}
+
+body.light-mode .backdrop-blur-light {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+/* Apple-inspired Keyframe Animations */
+@keyframes apple-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes apple-scale-subtle {
+  from {
+    opacity: 0.7;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes apple-hover-lift {
+  from {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  to {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+  }
+}
+
+@keyframes apple-scroll-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Global Animation Utilities */
+.animate-apple-fade-in {
+  animation: apple-fade-in var(--duration-medium) var(--ease-in-out-subtle) forwards;
+}
+
+.animate-apple-scale {
+  animation: apple-scale-subtle var(--duration-quick) var(--ease-out-expo) forwards;
+}
+
+.animate-apple-hover-lift {
+  transition: 
+    transform var(--duration-quick) var(--ease-out-expo),
+    box-shadow var(--duration-quick) var(--ease-out-expo);
+}
+
+.animate-apple-hover-lift:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+}
+
+/* Interactive Elements */
+.interactive-element {
+  transition: var(--transition-standard);
+  will-change: transform, opacity;
+}
+
+.interactive-element:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* Scroll-triggered Animations */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: 
+    opacity var(--duration-slow) var(--ease-in-out-subtle),
+    transform var(--duration-slow) var(--ease-in-out-subtle);
+}
+
+.scroll-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Backdrop and Blur Animations */
+.backdrop-blur {
+  backdrop-filter: blur(0px);
+  transition: backdrop-filter var(--duration-medium) var(--ease-in-out-subtle);
+}
+
+.backdrop-blur:hover {
+  backdrop-filter: blur(10px);
+}
+
+/* Responsive Considerations */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01s !important;
+    transition-duration: 0.01s !important;
+  }
+}
+
+/* Additional Typography Enhancements */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  letter-spacing: -0.022em;
+}
+
+p {
+  letter-spacing: -0.016em;
+}
+
+/* Responsive Typography */
+@media screen and (max-width: 768px) {
+  body {
+    font-size: 16px;  /* Slightly larger base font for mobile readability */
+  }
+}
+
+/* Design System Principles */
+:root {
+  /* Accessibility Color Tokens */
+  --color-primary-50: #f0f9ff;
+  --color-primary-100: #e0f2fe;
+  --color-primary-500: #0ea5e9;
+  --color-primary-900: #0c4a6e;
+
+  --color-secondary-50: #f8fafc;
+  --color-secondary-500: #64748b;
+  --color-secondary-900: #0f172a;
+
+  /* Typography Scale */
+  --font-size-xs: 0.688rem;
+  --font-size-sm: 0.813rem;
+  --font-size-base: 0.938rem;
+  --font-size-lg: 1.125rem;
+
+  /* Spacing and Layout */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+
+  /* Transition Tokens */
+  --transition-duration-quick: 0.2s;
+  --transition-duration-standard: 0.4s;
+  --transition-duration-slow: 0.6s;
+
+  --transition-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --transition-easing-accelerate: cubic-bezier(0.4, 0, 1, 1);
+}
+
+/* Accessibility and Inclusive Design Base Styles */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  line-height: 1.5;
+  color-scheme: light dark;
+  color: var(--color-secondary-50);
+  background-color: var(--color-secondary-900);
+}
+
+/* Accessibility Focus States */
+:focus-visible {
+  outline: 3px solid var(--color-primary-500);
+  outline-offset: 2px;
+  transition: outline-offset var(--transition-duration-quick) var(--transition-easing-standard);
+}
+
+/* Interactive Element Base Styles */
+button,
+[role="button"],
+input,
+select,
+textarea {
+  touch-action: manipulation;
+  min-height: 44px;  /* WCAG 2.1 Accessibility Standard */
+  min-width: 44px;
+}
+
+/* Reduced Motion Consideration */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Responsive Typography */
+@media screen and (max-width: 768px) {
+  :root {
+    --font-size-base: 0.875rem;
+    --line-height-base: 1.4;
+  }
+}
+
+/* Semantic Color Modes */
+.light-mode {
+  color-scheme: light;
+  color: var(--color-secondary-900);
+  background-color: var(--color-secondary-50);
+}
+
+.dark-mode {
+  color-scheme: dark;
+  color: var(--color-secondary-50);
+  background-color: var(--color-secondary-900);
+}
+
+/* Utility Classes for Design System */
+.text-compact-xs { 
+  font-size: var(--font-size-xs); 
+  line-height: 1rem; 
+}
+
+.text-compact-sm { 
+  font-size: var(--font-size-sm); 
+  line-height: 1.25rem; 
+}
+
+.text-compact-base { 
+  font-size: var(--font-size-base); 
+  line-height: 1.5rem; 
+}
+
+.text-compact-lg { 
+  font-size: var(--font-size-lg); 
+  line-height: 1.75rem; 
+}
+
+/* Elevation and Depth Utilities */
+.elevation-low {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.elevation-medium {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.elevation-high {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Interaction States */
+.interactive {
+  transition: 
+    transform var(--transition-duration-quick) var(--transition-easing-standard),
+    box-shadow var(--transition-duration-quick) var(--transition-easing-standard);
+}
+
+.interactive:hover {
+  transform: scale(1.02);
+}
+
+.interactive:active {
+  transform: scale(0.98);
+}
+
+/* Theme Transition Utilities */
+.theme-transition {
+  transition: 
+    background-color var(--transition-speed-normal),
+    color var(--transition-speed-normal),
+    border-color var(--transition-speed-normal);
+}
+
+/* Dark Mode Specific Enhancements */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  @apply w-2 bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply 
+    bg-gray-300 
+    dark:bg-gray-600 
+    rounded-full 
+    transition-colors 
+    duration-300;
+}
+
+::-webkit-scrollbar-track {
+  @apply 
+    bg-gray-100 
+    dark:bg-gray-800 
+    transition-colors 
+    duration-300;
+}
+
+/* Interactive Elements */
+.interactive-element {
+  @apply 
+    transition-all 
+    duration-300 
+    ease-in-out 
+    hover:scale-105 
+    active:scale-95;
+}
+
+/* Accessibility Focused Styles */
+@layer base {
+  * {
+    @apply 
+      focus:outline-none 
+      focus:ring-2 
+      focus:ring-blue-500 
+      focus:ring-opacity-50 
+      dark:focus:ring-blue-400;
+  }
+}
+
+/* Fade Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn var(--transition-speed-slow) ease-out;
+}
+
+/* Apple-inspired Animations */
+.animate-apple-fade-in {
+  animation: 
+    fadeIn var(--transition-speed-normal) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-apple-scale-subtle {
+  transition: 
+    transform var(--transition-speed-fast) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover\:apple-lift:hover {
+  transform: translateY(-4px);
+  transition: transform var(--transition-speed-fast) cubic-bezier(0.4, 0, 0.2, 1);
 }
